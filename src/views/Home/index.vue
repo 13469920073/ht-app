@@ -64,7 +64,7 @@
 import {getData,getInfo} from '../../api/index'
 import * as echarts from 'echarts';
 export default {
-  name:"Home",
+  name:'Home',
   data(){
     return {
       Name:'',
@@ -271,7 +271,6 @@ export default {
       :nth-child(2){
         color: #999999;
       }
-    
   }
  }
  .info{
