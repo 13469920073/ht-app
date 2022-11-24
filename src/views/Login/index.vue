@@ -9,12 +9,16 @@
         <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
        </el-form-item>
     </el-form>
-    <div style="width:100%;text-align:center">
+    <div style="width:100%;text-align:center" class="login_A">
       <el-button type="primary" @click="handleOk">登录</el-button>
+      <span @click="getcode" class="login_B">扫一扫</span>
+      <div  id="qrcode" ref="qrcode" class="login_C"></div>
+      <span v-if="Flag" class="login_D" @click="getLogin">x</span>
     </div>
   </div>
 </template>
 <script>
+import QRcode from 'qrcodejs2'
 import Mock from 'mockjs'
 import Cookie from 'js-cookie'
 import {getMenu} from '../../api/index'
@@ -26,6 +30,7 @@ export default {
           username:'',
           password:''
         },
+        Flag:false,
         rules:{
            username: [
             { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -57,6 +62,21 @@ export default {
             })        
          }
        })
+    },
+    getcode(){
+      this.Flag=true
+      this.$refs.qrcode.innerHTML=''
+       new QRcode('qrcode',{
+        width:100,
+        height:100,
+        text:'https://www.baidu.com/',
+        colorDark: '#000000', //前景色   
+        colorLight: '#ffffff', //后景色    
+      })
+    },
+    getLogin(){
+      this.$refs.qrcode.innerHTML=''
+      this.Flag=false
     }
   },
 }
@@ -69,5 +89,31 @@ export default {
     padding:15px 35px 25px 35px;
     background-color: #fff;
     box-shadow: 0 0 25px #cac6c6;
+  }
+  .login_A{
+    position:relative ;
+    .login_B{
+      position:absolute ;
+      top:10px;
+      right:10px;
+      font-size:14px;
+    }
+    .login_C{
+      position:absolute ;
+      top:-125px;
+      right:36%;
+      
+    }
+    .login_D{
+      position:absolute ;
+      top:-140px;
+      right:31%;
+      border: 1px solid #ccc;
+      width: 15px;
+      height: 15px;
+      text-align: center;
+      line-height: 12px;
+    }
+    
   }
 </style>
